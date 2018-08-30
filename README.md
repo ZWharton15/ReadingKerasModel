@@ -8,4 +8,4 @@ This script is intended for use in a command line. To use this script you can do
 - -model is the path to your own model file
 - -temp_img_dir is the path to a folder where the program can temporarily save the current webcam frame
 
-Once the model is loaded, the webcam display will be shown with the class value (0-num of classes in your model) or N/A if the threshold confidence (0.7 by default) is not met. Bellow that is the average FPS of the script, showing how many predictions can be made each second.
+Once the model is loaded, the webcam display will be shown with the class value (0-num of classes in your model) or **N/A** if the threshold confidence (0.7 by default) is not met. Bellow that is the average FPS of the script, showing how many predictions can be made each second.
