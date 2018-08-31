@@ -1,9 +1,7 @@
 import cv2
-import os
 import numpy as np
 from keras.models import load_model
-from keras.applications.inception_v3 import InceptionV3, preprocess_input
-from keras.preprocessing import image
+from keras.applications.inception_v3 import preprocess_input
 from keras import backend
 import time
 import sys
