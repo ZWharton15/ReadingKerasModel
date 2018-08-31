@@ -1,5 +1,5 @@
 # ReadingKerasModel
-A short script to read a keras model (.h5 or /.hdf5 file) and classify images through a webcam in real-time
+A short script to read a keras model (.h5 or .hdf5 file) and classify images through a webcam in real-time
 
 ## Usage
 This script is intended for use in a command line. To use this script you can do:
