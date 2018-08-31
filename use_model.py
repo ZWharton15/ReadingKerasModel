@@ -10,7 +10,7 @@ import sys
 
 
 """
-Convert the webcam frame to a keras image array and preprocess using the imported models method.
+Resizes the webcam frame into an image array and preprocess using the imported models method.
 Returns an array of the prediction likelihood for each class the model knows.
 
 @param model: the loaded model used for predictions
@@ -18,10 +18,9 @@ Returns an array of the prediction likelihood for each class the model knows.
 @param img_target_size: the default size of the model (299 for InceptionV3 or 224 for VGG16)
 """
 def predict(model, img, img_target_size):
-    img = image.load_img(img, target_size=(img_target_size, img_target_size))
-    x = image.img_to_array(img)
-    x = np.expand_dims(x, axis=0)
-    x = preprocess_input(x)
+    img2 = cv2.resize(img, (img_target_size,img_target_size))
+    x = np.expand_dims(img2, axis=0)
+    x = preprocess_input(x.astype(float))
     prediction = model.predict(x)
     return prediction
 
@@ -43,28 +42,15 @@ def read_arguments():
         elif model == None:
             model = sys.argv[i]
             continue
-        
-        #If a flag is given, use the next argument index to get the image directory
-        if "-temp_img_dir" in sys.argv[i]:
-            temp_img_dir = sys.argv[i+1]
-            ++i
-            continue
-        elif temp_img_dir == None:
-            temp_img_dir = sys.argv[i]
-            continue
         pass
-    return model, temp_img_dir
+    return model
 
-model_name, temp_img_dir = read_arguments()
-
+model_name = read_arguments()
 #Validate the users arguments
 try:
     model = load_model(model_name)
 except:
     print("Model not found")
-    sys.exit(0)
-if temp_img_dir == None:
-    print("Image directory not found")
     sys.exit(0)
 
 font = cv2.FONT_HERSHEY_SIMPLEX
@@ -81,8 +67,7 @@ try:
         success, frame = cap.read()
         
         if success:
-            cv2.imwrite(temp_img_dir + "/cap.jpg", frame)
-            label = predict(model, temp_img_dir + "/cap.jpg", 299)
+            label = predict(model, frame, 299)
             #Get the predicted class index
             pred = label.tolist()
             pred = pred[0]
@@ -126,4 +111,3 @@ finally:
     backend.clear_session()
     cap.release()
     cv2.destroyAllWindows()
-    os.remove(temp_img_dir + "/cap.jpg")
