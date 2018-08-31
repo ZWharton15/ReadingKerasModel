@@ -29,7 +29,6 @@ Returns the model name and image directory to store the webcam frame.
 """
 def read_arguments():
     model = None
-    temp_img_dir = None
 
     for i in range(1, len(sys.argv)):
         #If a flag is given, use the next argument index to get the model directory
